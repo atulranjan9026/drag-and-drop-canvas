@@ -17,6 +17,10 @@ const Canvas = () => {
     setCards([...cards, newCard]);
   };
 
+  const deleteCard = (cardId) => {
+    setCards(cards.filter((card) => card.id !== cardId));
+  };
+
   const openPopup = (cardId) => {
     setSelectedCard(cards.find((card) => card.id === cardId));
   };
@@ -29,12 +33,16 @@ const Canvas = () => {
     <div className="canvas-container">
       <button onClick={addCard} className="add-card-button">Add Card</button>
       <div className="canvas">
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <Draggable key={card.id}>
-            <ResizableBox width={200} height={100} className="card">
+            <ResizableBox width={200} height={150} className="card">
               <div className="card-content">
+                <p className="card-heading">Card {index + 1}</p>
                 <p>{card.text.slice(0, 50)}...</p>
-                <button onClick={() => openPopup(card.id)} className="show-more">Show More</button>
+                <div className="card-buttons">
+                  <button onClick={() => openPopup(card.id)} className="show-more">Show More</button>
+                  <button onClick={() => deleteCard(card.id)} className="delete-card">Delete</button>
+                </div>
               </div>
             </ResizableBox>
           </Draggable>
